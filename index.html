@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sombras dos Reinos Distantes - Timeline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Variáveis de Cores e Fontes */
+        :root {
+            --bg-color: #0d0a08;    /* Preto com um toque de marrom profundo */
+            --card-bg: #1a1410;     /* Marrom "café" muito escuro para os cartões */
+            --text-main: #d1c7bc;   /* Texto em um bege acinzentado (menos agressivo que branco) */
+            --accent-yellow: #b38f00; /* Dourado levemente mais queimado/antigo */
+            --font-title: 'Cinzel', serif;
+            --font-text: 'Lora', serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            /* Mudamos o gradiente para tons de marrom/sepia escuro 
+            background-image: radial-gradient(circle at center top, #1e1610 0%, #0d0a08 100%);
+            background-attachment: fixed;
+            color: var(--text-main);*/
+            background-color: #0d0a08; /* Cor de segurança caso a imagem falhe */
+            background-image: url('imgs/sombras_background4.webp');
+            background-repeat: repeat; /* Isso faz ela se repetir infinitamente */
+            background-attachment: scroll; /* A textura sobe junto com o texto */
+            /* background-size: 500px; */
+            color: var(--text-main);
+            font-family: var(--font-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Cabeçalho */
+        header {
+            text-align: center;
+            padding: 80px 20px; /* Aumentei o padding para a imagem aparecer mais */
+            background-color: #050403; 
+            
+            /* ADICIONE ESTAS LINHAS: */
+            background-image: linear-gradient(to bottom, rgba(5, 4, 3, 0.7), #050403), url('imgs/sombras_header.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            border-bottom: 2px solid rgba(179, 143, 0, 0.3); 
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        header h1 {
+            font-family: var(--font-title);
+            color: var(--accent-yellow);
+            font-size: 3.5em;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        header p {
+            font-style: italic;
+            opacity: 0.8;
+            font-size: 1.2em;
+        }
+
+        /* Estrutura da Timeline - Aumentada para 1200px */
+        .timeline {
+            position: relative;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: rgba(212, 175, 55, 0.5);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+        }
+
+        .container {
+            padding: 10px 50px; /* Mais respiro lateral */
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            box-sizing: border-box;
+            margin-top: -190px;
+            z-index: 1;
+        }
+
+        .container:first-child {
+            margin-top: 0;
+        }
+
+        .container:hover {
+            z-index: 10;
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg-color);
+            border: 3px solid var(--accent-yellow);
+            top: 35px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 10px var(--accent-yellow);
+            transition: transform 0.3s ease;
+        }
+
+        .right::after { left: -10px; }
+
+        .container:hover::after {
+            transform: scale(1.3);
+            background-color: var(--accent-yellow);
+        }
+
+        /* Cartão de Evento - Toque Medieval */
+        .content {
+            padding: 30px;
+            background-color: var(--card-bg);
+            position: relative;
+            border-radius: 4px;
+            /* Borda dupla para parecer uma moldura clássica */
+            border: 1px solid var(--accent-yellow);
+            outline: 1px solid rgba(212, 175, 55, 0.3);
+            outline-offset: -5px;
+            /* Sombras para dar profundidade de "placa" */
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.9), 0 10px 20px rgba(0,0,0,0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, outline-color 0.3s ease;
+            text-align: justify; /* Alinha o texto nos dois lados */
+            text-justify: inter-word; /* Melhora o espaçamento entre palavras para evitar buracos */
+            hyphens: auto;   /* Adiciona hifens automaticamente quando uma palavra precisa quebrar */
+            margin-bottom: 1.5em; /* Garante um espaço bom entre parágrafos */
+        }
+
+        .content:hover {
+            transform: translateY(-5px);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 0 8px 20px rgba(212, 175, 55, 0.15);
+            outline-color: var(--accent-yellow);
+        }
+
+        .date {
+            font-family: var(--font-title);
+            color: var(--accent-yellow);
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: inline-block;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+            padding-bottom: 5px;
+        }
+
+        .content h2 {
+            font-family: var(--font-title);
+            margin-top: 5px;
+            margin-bottom: 1px;
+            color: #fff;
+            font-size: 1.8em;
+        }
+
+        /* Letra Capitular (Estilo Medieval) para o primeiro parágrafo */
+        .content p:first-of-type::first-letter {
+            font-family: var(--font-title);
+            color: var(--accent-yellow);
+            font-size: 3em;
+            float: left;
+            margin-right: 8px;
+            line-height: 0.8;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .content img {
+            width: 100%;
+            border-radius: 2px;
+            margin-top: 2px;
+            cursor: zoom-in;
+            border: 2px solid #000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: opacity 0.3s;
+        }
+
+        .content img:hover { opacity: 0.8; }
+
+        /* Entidades Mapeadas e Tooltip */
+        .rpg-entity {
+            color: var(--accent-yellow);
+            font-weight: bold;
+            cursor: help;
+            border-bottom: 1px dashed var(--accent-yellow);
+            transition: text-shadow 0.2s;
+        }
+
+        .rpg-entity:hover { text-shadow: 0 0 8px rgba(212, 175, 55, 0.6); }
+
+        #custom-tooltip {
+            position: absolute;
+            background: #0b0c10;
+            border: 1px solid var(--accent-yellow);
+            padding: 15px;
+            border-radius: 2px;
+            width: 250px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.9);
+        }
+
+        #custom-tooltip img {
+            width: 100%;
+            border-radius: 2px;
+            margin-bottom: 10px;
+            display: none;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        #custom-tooltip h4 {
+            font-family: var(--font-title);
+            color: var(--accent-yellow);
+            margin: 0 0 5px 0;
+        }
+
+        #custom-tooltip p { margin: 0; font-size: 0.9em; }
+
+        /* Lightbox */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            text-align: center;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            margin-top: 5vh;
+            border: 2px solid var(--accent-yellow);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Responsividade */
+        @media screen and (max-width: 900px) {
+            .timeline::after { left: 31px; }
+            .container { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .left::after, .right::after { left: 21px; }
+            .right { left: 0%; }
+        }
+        /* O fundo do Modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 9999; /* Fica acima de TUDO */
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            cursor: pointer;
+        }
+
+        /* A imagem dentro do modal */
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+            margin-top: 5%;
+            border: 3px solid var(--gold-main); /* Moldura dourada */
+            box-shadow: 0 0 30px rgba(255, 191, 0, 0.2);
+        }
+
+        /* Legenda (Título) */
+        #modalCaption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            text-align: center;
+            color: var(--gold-main);
+            padding: 15px 0;
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+        }
+
+        /* Botão de fechar */
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Sombras dos Reinos Distantes</h1>
+        <p>Canção da minha alma, minha voz está morta</p>
+    </header>
+
+    <div class="timeline">
+
+        <div class="container left">
+            <div class="content">
+                <span class="date">Dia 0</span>
+                <h2>A pálida bruxa</h2>
+                <img src="https://i.imgur.com/l12TPgC.jpeg" class="timeline-img" alt="O último pouso">
+                <p>
+                O grupo, por acaso do destino, estava na taverna da <span class="entity" data-id="rasha">Dona Rasha</span>, em Marder, cada um com seus objetivos e oriundos de caminhos diferentes. Ao final da tarde, gritos ecoaram do lado de fora e uma densa neblina amarelada tomou conta. A silhueta revelou <span class="entity" data-id="yelena">Yelena</span>, a bruxa, caminhando em direção a taverna. No pânico, o grupo e outros foram pegos pela névoa e apagaram.</p>
+            </div>
+        </div>
+
+
+        <div class="container right">
+            <div class="content">
+                <span class="date">Dia 3 (supostamente) </span>
+                <h2>Bom dia, morte</h2>
+                <img src="imgs/002-Mar_Boat_Vazio.png" class="timeline-img" alt="Um mar tristonho">
+                <p>                
+                O grupo acordou em uma masmora, deitados em macas de pedra gélida e sem os equipamentos. Todos estavam com o símbolo de amarelo em algum lugar do corpo. Explorando em busca de uma saída, conheceram <span class="entity" data-id="dunis">Dunis</span>, o fantasma de uma criança que lhes explicou algumas coisas sobre o local e sobre Yelena, de quem ele tinha certo apreço. Com a promessa de tirá-lo dali e presenteados com um brazão da família Grizzlyfalls, o grupo conseguiu escapar e enganou <span class="entity" data-id="mogrox">Mogrox</span>, um ogro deformado que cuidava do local. Com seus equipamentos em mãos, rumaram para uma saída alternativa explicada por <span class="entity" data-id="dunis">Dunis</span>. Após um combate com alguns esqueletos, livraram o suspeito <span class="entity" data-id="rykar">Rykar Al'Laram</span> de uma das celas e desceram para as cavernas.</p> 
+                <p>
+                Atravessaram a caverna vencendo desafios naturais e outros nem tanto. A magia macabra de <span class="entity" data-id="yelena">Yelena</span> parecia afetar o local. Evitando os insetos e as poças sussurantes, o grupo usou da criatividade, arcanismo e sorte para chegar ao outro lado. Na saída, se depararam com uma praia deserta em uma pequena ilha com uma torre solitária. Embarcaram em um pequeno barco a remo que estava próximo e fugiram dali, rumo ao continente. O crânio humano que estava no barco foi jogado na água e, na saída, puderam ver <span class="entity" data-id="executor">O Executor</span> os observando da ilha. Koa, por um momento, pôde observar a macabra cena de corpos pendurados por algas flutuando alguns metros abaixo da superfície naquele mar negro.
+    
+                </p>                
+            </div>
+        </div>
+
+        <div class="container left">
+            <div class="content">
+                <span class="date">Dia 4</span>
+                <h2>A soturna cidade de Bilebrine</h2>
+                <img src="imgs/007-Bilebrine2.png" class="timeline-img" alt="Bilebrine">
+                <p>Ao chegarem à praia, o grupo foi recebido por corvos mortos-vivos que descansavam nas rochas. <span class="entity" data-id="rykar">Rykar Al'Laram</span> reconheceu o local e os levou por uma entrada secreta da subterrânea cidade de Bilebrine. Cada integrante deixou 3 moedas de ouro para entrar na cidade e foram para a taverna de <span class="entity" data-id="masven">Masven</span>, um meio Drow de meia idade pouco interessado no que eles traziam. O segredo durou pouco e, no dia seguinte, foram visitados pela cúpula da cidade, <span class="entity" data-id="harvine">Harvine Forestshard</span>,  <span class="entity" data-id="elise">Élise LaVergne</span> e <span class="entity" data-id="pietro">Pietro Dewaxe</span>. O grupo conseguiu se explicar e ganhou certa confiança da cidade. A apotecária e a sacerdotisa coletaram e lhes deram algumas informações sobre <span class="entity" data-id="yelena">Yelena</span>.</p> 
+                <p>Informados sobre o símbolo de amarelo e da "periculosidade" de <span class="entity" data-id="rykar">Rykar Al'Laram</span>, o grupo decidiu ajudar a cidade e sair em busca de <span class="entity" data-id="rovan">Rovan</span>, o patrulheiro da cidade que havia desaparecido em busca de mais informações sobre os Kobolds próximos.
+
+                </p>
+            </div>
+        </div>
+
+        <div class="container right">
+            <div class="content">
+                <span class="date">Dia 5</span>
+                <h2>Um patrulheiro perdido</h2>
+                <img src="imgs/009-Aerdy_Norte_Planicies.jpg" class="timeline-img" alt="Caminhos de Aerdy">
+                <p>O grupo partiu em busca de <span class="entity" data-id="rovan">Rovan</span>, seguindo sua trilha até o covil dos Kobolds. Deixando de lado a proposta de <span class="entity" data-id="rupert_cintrallis">Lord Rupert Cintrallis</span> de levá-lo até a cidade. O caminho foi longo, mas com poucas surpresas. Em 1 dia de viagem, eles chegaram nas proximidades do covil e montaram acampamento, esperando amanhecer para efetuar a entrada. Os esforços dos kobolds de criarem armadilhas no caminho não foram bem-sucedidos e o grupo conseguiu invadir a caverna.</p>
+
+                <p>A luta pareceu inicialmente controlada, mas quando tudo estava calmo, o líder, uma espécie de kobold-draconato alado, apareceu para finalizar as coisas. Um tenso combate foi travado, onde, além de lutar pelas próprias vidas, o grupo precisou acabar com as coisas antes que os kobolds silenciassem <span class="entity" data-id="rovan">Rovan</span>. Com ferimentos e marcas para levar para a história, o grupo saiu vitorioso.</p>
+
+                <p>O patrulheiro não estava bem. Afetado pelo símbolo amarelo, ele explicou o pouco que sabia e comentou sobre estar compartilhando esse conhecimento com os Kobolds. "A sombra dos meus pensamentos se prolonga à tarde." Foi a primeira vez que o grupo ouviu essa frase que seria ouvida em outras ocasiões. Uma moeda mágica (Rival Coin) com as faces de <span class="entity" data-id="drulkadiandeliath">Drulkadiandeliath</span> e <span class="entity" data-id="eschazaedras">Eschazaedras</span> foi encontrada, com uma Capa de Ondulações (Cape of Billowing) e uma bolsa mágica de especiarias (Heward's Handy Spice Pouch) no tesouro, além de algumas moedas.</p>
+
+            </div>
+        </div>
+
+        <div class="container left">
+            <div class="content">
+                <span class="date">Dia 6 ao 12</span>
+                <h2>De volta a Bilebrine</h2>
+                <img src="imgs/006-Bilebrine1.png" class="timeline-img" alt="Bilebrine 2">
+                <p>Carregando o corpo do kobold-draconato e acompanhados apreensivamente de <span class="entity" data-id="rovan">Rovan</span>, o grupo rumou de volta para Bilebrine. Devido ao estado mental abalado do patrulheiro, que demonstrava um comportamento inquieto, não confiava nas pessoas de bilebrine e ainda tinha um olho negro com o símbolo, o grupo decidiu que voltar para a cidade era uma prioridade. Bem-sucedidos em seguir a trilha, conseguiram voltar em apenas um dia, mesmo com o peso extra. 
+                </p>
+                <p>Na cidade subterrânea, o grupo entregou <span class="entity" data-id="rovan">Rovan</span> aos cuidados da cúpula e foi avaliar a situação junto a <span class="entity" data-id="harvine">Harvine</span>. Agora mais tranquilos, decidiram ficar na cidade para dar tempo do estudo do corpo ser realizado. Cruzada e <span class="entity" data-id="harvine">Harvine</span> aprenderam mais sobre o símbolo de amarelo, observando seu poder e estudando sobre mortos-vivos. Geum arrumou alguns trocados fazendo trabalho pesado, enquanto Eldrin buscava um contato mais próximo de <span class="entity" data-id="elise">Élise</span>, o que lhe rendeu um apoio futuro na cidade de Atirr. Koa, por sua vez, coletou cogumelos soníferos para uso futuro. Após cerca de 5 dias na cidade, o grupo partiu para Atirr, a pedido de <span class="entity" data-id="harvine">Harvine</span> e <span class="entity" data-id="elise">Élise</span>, com a intenção de negociar a abertura de um portal entre as cidades, seja via formalidades ou contatos internos. Até o momento, o símbolo de amarelo era um símbolo arcano inaudito e de escola mágica desconhecida, que fornece poder à quem o usa, mas perturba a mente. Aparentemente, sendo empunhado e ensinado pela bruxa da ilha, <span class="entity" data-id="yelena">Yelena</span>.</p>
+
+            </div>
+        </div>
+
+                <div class="container right">
+            <div class="content">
+                <span class="date">Dia 12 ao 17</span>
+                <h2>A viagem até Atirr</h2>
+                <img src="imgs/011-Ponte_to_Atirr.png" class="timeline-img" alt="Caminho para Atirr">
+                <p>Acompanhados de <span class="entity" data-id="rykar">Rykar Al'laram</span> e sua mochila, o grupo rumou até Atirr a pé, sabendo que seria uma viagem de aproximadamente 5 dias. <span class="entity" data-id="rykar">Rykar</span> havia prometido que os colocaria dentro da cidade após ter passado a noite escondido no quarto de Koa, na taverna. A viagem seguiu e tiveram um encontro com um curioso "Pastor de Nuvens", <span class="entity" data-id="ravuh">Ravuh</span>, o homem sapo, de fala estranha, que disse estar procurando "seu amigo rei que anda por aí na cabeça de seu amigo anão". <span class="entity" data-id="ravuh">Ravuh</span> ficou muito feliz com um <span class="entity" data-id="poema_cruzada_1">poema escrito por Cruzada</span> e entregou ao grupo uma semente de nuvem.</p>
+
+                <p>A viagem se tornou mais macabra quando o grupo encontrou a carruagem de <span class="entity" data-id="rupert_cintrallis">Lord Ruppert Cintrallis</span> e seus dois escudeiros. O corpo do lorde não estava lá, mas havia deixado para trás uma carta para seu filho. Explorar o local rendeu algumas moedas e equipamentos de nobres. Os sinais de um ataque eram claros, mas o grupo seguiu viagem destemido. A passagem pela ponte tortuosa os marcou, pois Koa observou novamente um corpo flutuando abaixo da superfície, muito parecido com aqueles próximos da ilha onde foram levados, mas dessa vez o corpo o viu de volta e nadou para longe.</p>
+
+                <p>No pico de tensão da viagem, o grupo foi atacado por um bando de morcegos, onde um <span class="entity" data-id="morcegoide">morcego gigante</span>, com o símbolo amarelo nos olhos, desceu em busca de alguma coisa. Enquanto o grupo se livrava do enxame de morcegos, o grandão buscava a mochila de <span class="entity" data-id="rykar">Rykar</span>, mas foi ferido o suficiente para ter de bater em retirada. O ataque causou um descontentamento forte do grupo com <span class="entity" data-id="rykar">Rykar</span>, que teve sua mochila roubada pelo grupo. Lá, encontrava-se um baú arcano com um item mágico dentro, o qual <span class="entity" data-id="rykar">Rykar</span> iria revender na cidade. Ele sabia que era algo perigoso e o grupo entendeu que o baú era uma forma de proteção. <span class="entity" data-id="rykar">Rykar</span> fugiu durante a noite, rumando para Atirr, enquanto o grupo ficou com seus pertences.</p>
+
+            </div>
+        </div>
+
+                <div class="container left">
+            <div class="content">
+                <span class="date">Dia 18</span>
+                <h2>O orgulho ao leste - Atirr</h2>
+                <img src="imgs/001-Atirr_Far_Away.webp" class="timeline-img" alt="Atirr">
+                <p>Sem seu ladrão favorito para ajudá-los a entrar na cidade, o grupo usou os recursos que tinha e a carta para conseguir passagem. Sem muita dificuldade, encontraram seu caminho para dentro de Atirr e foram em busca de alguma recomendação. Logo encontraram a taverna de <span class="entity" data-id="naesala_liasandoral">Naesala Liasandoral</span>, uma ex-aventureira, estofadora e floricultora com poderes mágicos de origem dracônica. A recepção foi desconfiada, mas calorosa, principalmente para Eldrin, que teve momentos mais íntimos com ela. O interesse sobre <span class="entity" data-id="drulkadiandeliath">Drulkadiandeliath</span> era expressivo e ela, de fato, tinha as mesmas escamas douradas que Eldrin. A elfa explicou algumas coisas da cidade e deixou claro que precisava de algo muito sério para arriscar abrir o portal que escondia em algum lugar.</p>
+
+                <p> O grupo se aventurou mais um pouco por Atirr, conhecendo a <span class="entity" data-id="malena">irmã Malena</span> na capela de Wee Jas e aprendendo sobre a existência do Monastério do Primeiro Punho, com o <span class="entity" data-id="firsak">monge Firsak</span>. O primeiro problema já estava no colo deles: corpos estavam sendo roubados na cidade e o símbolo amarelo estava sendo usado para marcar os caixões. </p>
+
+                <p> O grupo ouviu falar sobre o povo rato da cidade de Atirr e como eram injustamente menosprezados, mas também como algo estranho estava acontecendo com eles. Conheceram Nyko, um rapaz rato que estava sendo pago para pintar alguns símbolos, tendo apenas os nomes em mãos. Posteriormente, encontraram com vovô, um vetusto homem-rato que era responsável por pagar Nyko e dar os nomes a ele. Em um momento de surpresa, o nome <span class="entity" data-id="camilla_sylesse">Camilla Sylesse</span> apareceu como o próximo túmulo a ser buscado, causando apreensão em alguns aventureiros e pânico em Cruzada. O grupo se preparou para visitar o cemitério em busca de Camila.</p>
+            </div>
+        </div>
+
+        <div class="container right">
+            <div class="content">
+                <span class="date">Dia 19</span>
+                <h2>Prazer, Mortalha</h2>
+                <img src="imgs/Mortalha.jpg" class="timeline-img" alt="Mortalha">
+                <p> Visitas indesejadas na estalagem La Font, além da peculiaridade do grupo, fez com que <span class="entity" data-id="naesala_liasandoral">Naesala</span> não os quisesse mais ali dentro. O grupo conheceu Ar’Survio, um Kenku criado por <span class="entity" data-id="harvine">Harvine</span>, que já estava na cidade e agora iria ajudá-los. Um plano arriscado de mostrar a carta novamente e tentar acesso ao Lorde Cintrallis na parte nobre da cidade foi posto em ação. Após algumas interações com guardas e <span class="entity" data-id="rovard_cintrallis">Rovard Cintrallis</span>, o grupo aprendeu que o filho parecia pouco se importar com a morte do pai e que a notícia já o fazia maquinar os próximos passos. </p>
+
+                <p> Focado, o grupo decidiu visitar o cemitério atrás da igreja de Pelor, apenas para ser surpreendido por um tipo de Golem costurado e ladrão de tumbas, espécies de almas penadas e a presença do macabro <span class="entity" data-id="mortalha">Mortalha</span>. Um combate se sucedeu, sem a participação do Mortalha, que apenas atiçou alguns membros do grupo e fugiu. A neblina amarela cercou o local durante todo o combate, impedindo o auxílio dos pelorianos ao redor. <span class="entity" data-id="mortalha">Mortalha</span> deixou uma vítima (um carapaça, guarda comum de Atirr).</p>
+
+                <p> Lá conheceram <span class="entity" data-id="klaus">Padre Klaus</span> e os Falangistas do Sol pela primeira vez, tendo momentos de tensão antes de se entenderem. <span class="entity" data-id="klaus">Klaus</span> já havia recebido o nome deles por causa do contato com a sacerdotisa <span class="entity" data-id="elise">Élise</span>. Escondidos em uma sala especial da gigantesca Catedral de Pelor, o grupo debateu as opções e concordou em ajudar <span class="entity" data-id="klaus">Padre Klaus</span>, prometendo ir ao esgoto buscar evidências que pudessem sustentar o que estavam buscando.</p>
+            </div>
+        </div>
+
+        <div class="container left">
+            <div class="content">
+                <span class="date">Dia 20</span>
+                <h2>Uma visita ao esgoto</h2>
+                <img src="imgs/002-Atirr Streets.png" class="timeline-img" alt="Atirr Interior">
+                <p>O grupo mapeou as entradas do esgoto de forma rápida e descobriu um ponto escondido o suficiente para conseguir acesso. Após algumas descidas perigosas e muito trabalho em conjunto, o grupo perambulou pelo esgoto, encontrando o símbolo amarelo algumas vezes e, finalmente, se deparou com um corredor peculiar, com sinais de presença humanoide.</p>
+
+                <p>Lá encontraram um porteiro do povo-rato e, pela sorte de terem um ladino no grupo, conseguiram se comunicar na linguagem de ladrões, aprendendo que um ponto de negociação de bandidos estava logo à frente e que a porta para o “canto” dos ratos também. Passaram por um grupo que carregava um prisioneiro, mas, após breve tensão, deixaram seguir. Os olhares curiosos faziam comentários sobre o grupo, mas nada aconteceu.</p>
+
+                <p>Após vencer um portão de ferro enorme, o grupo entrou em combate com o povo-rato e outros seres-rato completamente diferentes e mais violentos. A presença do símbolo amarelo se fazia mais uma vez notável. Após vencerem, exploraram o local e descobriram uma passagem secreta na poça de água suja estagnada ali. O caminho estava nessa passagem que abria com uma chave mágica, funcionando como uma descarga que levava para um nível inferior, no qual o Wheke, o familiar de Koa, explorou um pouco e viu ameaças mágicas. Feridos, cansados e com evidência em mãos, decidiram voltar carregando o corpo</p>
+
+                <p>A viagem foi longa e árdua. Perdidos dentro do esgoto por mais de 9 horas, o grupo tentava achar outra saída possível que desse na parte nobre. Com um pouco de teatro e agilidade, todos conseguiram voltar para a entrada secreta da catedral de Pelor. O dia já havia virado, Ar’Survio ficou cuidando do corpo enquanto os demais foram para a missa.</p>
+            </div>
+        </div>
+
+                <div class="container right">
+            <div class="content">
+                <span class="date">Dia 21</span>
+                <h2>Em nome do Sol</h2>
+                <img src="imgs/pelor_church.webp" class="timeline-img" alt="Catedral Pelor">
+                <p>A missa de Pelo foi acalentadora para quem é de fé e o grupo viu <span class="entity" data-id="franciska_sylesse">Lady Franciska Sylesse</span> pela primeira vez, que evitou conversar com eles. Outra personalidade famosa da cidade apareceu: <span class="entity" data-id="kallista">Comandante Kallista</span>, um genasi de água maga de batalha que é a líder da Alta Maré e da Guarda da cidade, braço direito de <span class="entity" data-id="ryshern">Ryshern</span>. Na presença dela, de <span class="entity" data-id="klaus">Klaus</span> e da <span class="entity" data-id="malena">irmã Malena</span>, o grupo negociou tensamente o seu futuro, até que o corpo do rato foi apresentado. </p>
+
+                <p>A conversa mudou o tom e <span class="entity" data-id="kallista">Kallista</span> decidiu confiar que o grupo conseguiria trazer mais, deixando claro que aquele corpo não era um povo-rato normal, era algo alterado. Com promessa de um pagamento de 2 mil peças de ouro e equipamentos no momento para reforçá-los, o grupo descansou e rumou para o esgoto de Atirr novamente, agora certos de que algo estava usando o símbolo de amarelo para alterar os ratos e deveriam voltar com algum artefato mágico e seja lá o que for destruído.</p>
+
+                <p>Eles aprenderam que essa parte do esgoto era desconhecida por várias pessoas, pois era uma parte antiga e banida, de acordo com <span class="entity" data-id="kallista">Kallista</span>. O símbolo até então era apenas uma “chatice” sem importância para a maga, mas é a chance de provarem que ele é um problema latente e real.</p>
+
+
+            </div>
+        </div>
+
+        <div class="container left">
+            <div class="content">
+                <span class="date">Dia 22</span>
+                <h2>Na sujeira outra vez</h2>
+                <img src="imgs/esgoto.webp" class="timeline-img" alt="Esgoto">
+                <p>Cá estamos nós, dentro do esgoto de Atirr, agora protegido com mais armadilhas. Após um tenebroso encontro com uma mulher-rato, destransformando e proferindo palavras conhecidas, como “As sombras dos meus pensamentos se prolongam”, o grupo se aventura esgoto adentro. Já com novos itens mágicos em mãos, tendo derrotado inimigos e colocado suas mãos em um livro de Hastur, o rei de amarelo, o grupo segue rumando pelo esgoto atrás do responsável por tudo isso.</p>
+
+            </div>
+        </div>
+    
+
+
+
+
+        
+    </div>
+
+    <div id="custom-tooltip">
+        <img id="tt-img" src="" alt="Entity Image">
+        <h4 id="tt-title">Título</h4>
+        <p id="tt-desc">Descrição</p>
+    </div>
+
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tooltip = document.getElementById('custom-tooltip');
+            const ttTitle = document.getElementById('tt-title');
+            const ttDesc = document.getElementById('tt-desc');
+            const ttImg = document.getElementById('tt-img');
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("imgFull");
+            const captionText = document.getElementById("modalCaption");
+
+            // 1. Processar entidades dinâmicas do bancoDadosRPG
+            const bancoDadosRPG = {
+                "yelena": {
+                    title: "Yelena, a pálida",
+                    desc: "A jovem bruxa, carregando o símbolo amarelo em seu cinto.",
+                    image: "imgs/Yelena_Initial_Certa.png"
+                },
+                "rasha": {
+                    title: "Dona Rasha",
+                    desc: "Velha dona da Taverna O Último Pouso.",
+                    image: "https://i.imgur.com/tpM9z3P.png"
+                },
+                "dunis": {
+                    title: "Dunis",
+                    desc: "O amigável fantasma no calabouço",
+                    image: "imgs/001-Dunis.jpeg"
+                },
+                "mogrox": {
+                    title: "Mogrox",
+                    desc: "Um ogro deformado e muito burro que tinha o dever de proteger o calabouço",
+                    image: "imgs/004-Mogrox2.png"
+                },
+                "rykar": {
+                    title: "Rykar Al'Laram",
+                    desc: "Ladrão que também estava preso no calabouço de Yelena",
+                    image: "imgs/Rykar_Aldam.jpg"
+                },
+                "elise": {
+                    title: "Élise LaVergne",
+                    desc: "Meia-elfa, sacerdotisa de Pelor respeitada em Bilebrine. É uma escolhida de Pelor, segundo Klaus. Parte do conselho de Bilebrine.",
+                    image: "imgs/002-Élise_LaVergne.jpg"
+                },
+                "harvine": {
+                    title: "Harvine Forestshard",
+                    desc: "Apotecária, necromante e vampira que habita a cidade de Bilebrine e faz parte do conselho de líderes do local. A sombria devota de Wee Jas, apesar da imponente presente, é muito formal e amigável, apesar de séria, com os aventureiros.",
+                    image: "imgs/Harvine Forestshard.jpg"
+                },
+                "pietro": {
+                    title: "Pietro Dewaxe",
+                    desc: "Humano de meia idade, líder da milícia de Bilebrine e parte do conselho. Também chamado de Prefeito.",
+                    image: "imgs/005-Pietro Dewaxe.jpg"
+                },
+                "masven": {
+                    title: "Masven Waeglossz",
+                    desc: "Taverneiro meio-drow que vive em Bilebrine. Não se importa muito com o que está acontecendo, mas é simpático.",
+                    image: "imgs/008-Masven_Waeglossz.png"
+                },
+                "rovan": {
+                    title: "Rovan",
+                    desc: "Patrulheiro da cidade de Bilebrine, contamidado pela idéia do símbolo de amarelo. Foi resgatado de Kobols pelo grupo, mas não parece estar bem.",
+                    image: "imgs/007-Rovan.jpg"
+                },
+                "rupert_cintrallis": {
+                    title: "Lord Rupert Cintrallis",
+                    desc: "Lorde que estava em uma viagem de negócios em Bilebrine, acompanhado de seu escudeiro. Tentou convencer o grupo de levá-lo até Atirr, mas sem sucesso, acabou sumindo no caminho.",
+                    image: "imgs/Lord_Ruppert_Cindralis.png"
+                },
+                "drulkadiandeliath": {
+                    title: "Drulkadiandeliath",
+                    desc: "O lendário dragão dourado que viveu no grande reino de Aerdy do Norte. Um Wyrm que derreteu todo seu tesouro e modificou seu corpo para criar uma armadura contra seu rival Eschazaedras.",
+                    image: "imgs/quetion.png"
+                },
+                "eschazaedras": {
+                    title: "Eschazaedras",
+                    desc: "O lendário rival de Drulkadiandeliath. Tirou sua própria vida para se tornar um Dracolich e tentar destruir seu rival. Foi aprisionado por ele e pela ordem esotérica dracônica em algum lugar embaixo d'água.",
+                    image: "imgs/quetion.png"
+                },
+                "ravuh": {
+                    title: "Ravuh",
+                    desc: "O pastor de nuvens à procura de seu amigo rei em cima de seu amigo anão.",
+                    image: "imgs/Ravuh.webp"
+                },
+                "naesala_liasandoral": {
+                    title: "Naesala Liasandoral",
+                    desc: "Feiticeira dracônica, ex-aventureira, estofadora, floricultora e dona da Estalagem La Font.",
+                    image: "imgs/Naesala_Liasandorel_2.png"
+                },
+                "malena": {
+                    title: "Irmã Malena",
+                    desc: "Freira da capela de Wee Jas.",
+                    image: "imgs/Malena.webp"
+                },
+                "firsak": {
+                    title: "Monge Firsak",
+                    desc: "Monge do Monastério do Primeiro Punho.",
+                    image: "imgs/Firdak.webp"
+                },
+                "camilla_sylesse": {
+                    title: "Camilla Sylesse",
+                    desc: "A mulher das memórias de Cruzada, filha de Franciska Sylesse",
+                    image: "imgs/Camilla Sylesse.jpg"
+                },
+                "rovard_cintrallis": {
+                    title: "Rovard Cintrallis",
+                    desc: "Filho do Lord Rupert. Pouco se importou com a morte do pai.",
+                    image: "imgs/Lord_Rovard_Cintrallis.jpg"
+                },
+                "mortalha": {
+                    title: "Mortalha",
+                    desc: "O Mortalha.",
+                    image: "imgs/Mortalha_full.jpg"
+                },
+                "klaus": {
+                    title: "Padre Klaus",
+                    desc: "Padre de alta escalão da fé de Pelor. Contato de Élise LaVergne, a qual ele respeita muito.",
+                    image: "imgs/Padre_Klaus.webp"
+                },
+                "franciska_sylesse": {
+                    title: "Lady Franciska Sylesse",
+                    desc: "Refugiada em Atirr, mãe de Camila Sylesse. Nobre.",
+                    image: "imgs/franciska.webp"
+                },
+                "kallista": {
+                    title: "Comandante Kallista",
+                    desc: "Comandante da Alta Maré, divisão de elite da guarda de Atirr. É braço direito do mago da corte Ryshern.",
+                    image: "imgs/Kallista, Maré Vermelha.webp"
+                },
+                "ryshern": {
+                    title: "Ryshern",
+                    desc: "Mago da corte de Atirr.",
+                    image: "imgs/quetion.png"
+                },
+                "executor": {
+                    title: "O Executor",
+                    desc: "Mago da corte de Atirr.",
+                    image: "imgs/O_executor.jpg"
+                },
+                "poema_cruzada_1": {
+                    title: "Poema de Cruzada para Ravuh",
+                    desc: "<i>carneiros saltitam pelo anil<br>Ravuh observa com carinho<br>o vento guia os corações<br>de todos ao devido caminho</i>",
+                    image: "imgs/scroll.png"
+                },
+                "morcegoide": {
+                    title: "Morcego Gigante",
+                    desc: "Morcego monstro gigante que atacou o grupo em busca do item que rykar carregava",
+                    image: "imgs/Bat_Monstrosity.jpg"
+                }
+          
+            };
+
+            document.querySelectorAll('.entity').forEach(el => {
+                const id = el.getAttribute('data-id');
+                const info = bancoDadosRPG[id];
+                if (info) {
+                    el.classList.add('rpg-entity');
+                    el.setAttribute('data-title', info.title);
+                    el.setAttribute('data-desc', info.desc);
+                    el.setAttribute('data-image', info.image);
+                }
+            });
+
+            // 2. Lógica Unificada para Tooltip (Hover) e Modal (Clique)
+            // Usamos delegação de evento para garantir que funcione em todos os itens
+            document.addEventListener('mouseover', function(e) {
+                const target = e.target.closest('.rpg-entity');
+                if (!target) return;
+
+                ttTitle.textContent = target.getAttribute('data-title');
+                ttDesc.innerHTML = target.getAttribute('data-desc');
+                const imgSrc = target.getAttribute('data-image');
+                
+                if (imgSrc) {
+                    ttImg.src = imgSrc;
+                    ttImg.style.display = 'block';
+                } else {
+                    ttImg.style.display = 'none';
+                }
+                tooltip.style.opacity = '1';
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (tooltip.style.opacity === '1') {
+                    tooltip.style.left = (e.pageX + 15) + 'px';
+                    tooltip.style.top = (e.pageY + 15) + 'px';
+                }
+            });
+
+            document.addEventListener('mouseout', function(e) {
+                if (e.target.closest('.rpg-entity')) {
+                    tooltip.style.opacity = '0';
+                }
+            });
+
+            // 3. Clique para abrir o Modal
+            document.addEventListener('click', function(e) {
+                const target = e.target.closest('.rpg-entity');
+                if (target) {
+                    modal.style.display = "block";
+                    modalImg.src = target.getAttribute('data-image');
+                    captionText.innerHTML = target.getAttribute('data-title');
+                }
+            });
+
+            // Fechar Modal
+            modal.onclick = function() {
+                modal.style.display = "none";
+            };
+
+            // 4. Lógica da Galeria (Lightbox das imagens grandes)
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+
+            document.querySelectorAll('.timeline-img').forEach(img => {
+                img.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita conflitos
+                    lightboxImg.src = img.src;
+                    lightbox.style.display = 'block';
+                });
+            });
+        });
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
+
+    <div id="imageModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="imgFull">
+    <div id="modalCaption"></div>
+
+</div>
+</body>
+</html>
