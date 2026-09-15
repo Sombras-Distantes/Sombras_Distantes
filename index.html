@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕵️‍♂️ O que Sabemos?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Variáveis de Cores e Fontes */
+        :root {
+            --bg-color: #0d0a08;       /* Preto com toque de marrom profundo */
+            --card-bg: #1a1410;     /* Marrom "café" muito escuro */
+            --text-main: #d1c7bc;   /* Bege acinzentado */
+            --accent-yellow: #b38f00; /* Dourado envelhecido */
+            --font-title: 'Cinzel', serif;
+            --font-text: 'Lora', serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: url('imgs/sombras_background4.webp');
+            background-repeat: repeat;
+            background-attachment: scroll;
+            color: var(--text-main);
+            font-family: var(--font-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            font-size: 1.1em;
+        }
+
+        /* Cabeçalho */
+        header {
+            text-align: center;
+            padding: 100px 40px;
+            background-color: #050403; 
+            background-image: linear-gradient(to bottom, rgba(5, 4, 3, 0.7), #050403), url('imgs/sombras_header.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-bottom: 2px solid rgba(179, 143, 0, 0.3); 
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        header h1 {
+            font-family: var(--font-title);
+            color: var(--accent-yellow);
+            font-size: 3.8em;
+            margin: 0;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Container Principal Expandido para telas grandes (2K) */
+        main {
+            max-width: 1600px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 0 20px 100px 20px;
+            box-sizing: border-box;
+        }
+
+        /* Estilo dos Cartões / Seções */
+        .content-card {
+            padding: 50px 60px;
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            border: 1px solid var(--accent-yellow);
+            outline: 1px solid rgba(212, 175, 55, 0.3);
+            outline-offset: -6px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.9), 0 10px 25px rgba(0,0,0,0.8);
+            margin-bottom: 40px;
+        }
+
+        /* Títulos */
+        h2.section-title {
+            font-family: var(--font-title);
+            color: var(--accent-yellow);
+            font-size: 2.3em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(179, 143, 0, 0.3);
+            padding-bottom: 12px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        h3.subsection-title {
+            font-family: var(--font-title);
+            color: #ffffff;
+            font-size: 1.6em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h4.sub-subsection-title {
+            font-family: var(--font-title);
+            color: var(--accent-yellow);
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* Listas */
+        ul.custom-list {
+            list-style-type: disc;
+            padding-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        ul.custom-list li {
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        ul.custom-list li::marker {
+            color: var(--accent-yellow);
+        }
+
+        ul.custom-list ul {
+            list-style-type: circle;
+            padding-left: 30px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        ul.custom-list ul ul {
+            list-style-type: square;
+            padding-left: 25px;
+        }
+
+        /* Seções Expansíveis (Accordion/Collapsible) */
+        details.expandable-section {
+            background-color: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(179, 143, 0, 0.4);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        details.expandable-section[open] {
+            border-color: var(--accent-yellow);
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        summary.expandable-header {
+            font-family: var(--font-title);
+            font-size: 1.8em;
+            color: var(--accent-yellow);
+            padding: 20px 30px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+
+        summary.expandable-header:hover {
+            background-color: rgba(179, 143, 0, 0.12);
+        }
+
+        summary.expandable-header::after {
+            content: '▲';
+            font-size: 0.8em;
+            color: var(--accent-yellow);
+            transform: rotate(180deg);
+            transition: transform 0.3s ease;
+        }
+
+        details[open] summary.expandable-header::after {
+            transform: rotate(0deg);
+        }
+
+        .expandable-content {
+            padding: 25px 30px;
+            border-top: 1px dashed rgba(179, 143, 0, 0.25);
+        }
+
+        /* Estilos do Hover de Imagem dos NPCs */
+        .npc-hover {
+            position: relative;
+            cursor: pointer;
+            text-decoration: underline dotted var(--accent-yellow);
+            transition: color 0.2s ease;
+        }
+
+        .npc-hover:hover {
+            color: var(--accent-yellow);
+        }
+
+        .npc-hover::after {
+            content: '';
+            position: absolute;
+            bottom: 125%;
+            left: 0;
+            width: 180px;
+            height: 240px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid var(--accent-yellow);
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(10px);
+            z-index: 100;
+        }
+
+        .npc-hover:hover::after {
+            content: '';
+            background-image: attr(data-img url); /* Fallback estrutural */
+            background-image: var(--npc-img);
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Responsividade */
+        @media screen and (max-width: 1024px) {
+            main {
+                width: 95%;
+                padding: 0 10px 60px 10px;
+            }
+            .content-card {
+                padding: 30px;
+            }
+            header h1 {
+                font-size: 2.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho Principal -->
+    <header>
+        <h1>O que Sabemos?</h1>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+
+        <!-- Página 1: Yelena Zharaskova -->
+        <div class="content-card">
+            <h2 class="section-title">🔹 Yelena Zharaskova</h2>
+            <ul class="custom-list">
+                <li>Yelena Zharaskova é a bruxa da Ilha, conhecida como “A Pálida”, figura central no comando da expansão da memória do Rei de Amarelo em Aerdy do Norte.</li>
+                <li>Yelena é uma jovem de Bellport ou Kaport Bay, alguma cidade da região.</li>
+                <li>Yelena foi vista em alguns locais em Aerdy, envolta por uma névoa amarela e lacaios.</li>
+                <li>Yelena supostamente reside na Ilha das Almas perdidas, ligada ao continente pela calçada dos diabos, que é visível de acordo com a maré.</li>
+                <li>A ilha é atualmente impenetrável, relatos de navios se desfazendo ao tentarem se aproximar.</li>
+                <li>Yelena tem mantido exércitos de criaturas decadentes e mortos-vivos para se proteger e alcançar seus objetivos.</li>
+            </ul>
+        </div>
+
+        <!-- Página 2: O Rei de Amarelo -->
+        <div class="content-card">
+            <h2 class="section-title">🔹 O Rei de Amarelo</h2>
+            <ul class="custom-list">
+                <li>O Rei de Amarelo é uma entidade incompreendida, cujo poderes surpassam ou se assemelham a deuses maiores.</li>
+                <li>
+                    O rei e o seu símbolo representam a decadência do corpo, mente e alma, o que é amoral, pecaminoso, sórdido.
+                    <ul>
+                        <li>Mortos vivos, insetos, doenças, criaturas naturally ligadas a estas coisas no imaginário popular (aranhas, lacraias, vermes, morcegos, ratos, cobras, etc.) são constantemente presentes nas atividades do culto.</li>
+                    </ul>
+                </li>
+                <li>Existem cultistas que o veneram, majoritariamente dentro da nobreza das grandes cidades de Aerdy do Norte.</li>
+                <li>A principal fonte de conhecimento sobre o Rei de Amarelo é uma peça de teatro. A qual enlouquece seus leitores.</li>
+            </ul>
+
+            <h3 class="subsection-title">Como a ideia do rei se espalha</h3>
+            <ul class="custom-list">
+                <li>O Rei de Amarelo foi esquecido, mas, teoricamente, a memória da sua verdade reside na mente de cada um, adormecida. O trabalho do culto e Yelena envolve usar de formas arcanas, simbólicas e práticas para que ele seja lembrado. Envolve construir na “vida real” a peça do Rei de Amarelo novamente.</li>
+                <li>Como uma doença, sua memória se espalha através do uso de seus poderes (via símbolo de amarelo), leitura de seus textos, adoração aos seus símbolos e figuras, discussão sobre sua realidade, etc.</li>
+                <li>Yelena tem ensinado aliados, servos ou pessoas (criaturas) chave sobre os poderes de Amarelo. Fornecendo o conhecimento e artefatos de poder para que possam usar e corromper tudo que fazem com o toque do Rei de Amarelo. É como se ela estivesse dando “papéis” aos seus atores dentro da grande peça do Rei de Amarelo.</li>
+            </ul>
+
+            <h3 class="subsection-title">Onde habita</h3>
+            <ul class="custom-list">
+                <li>Há teoria de que está em algum lugar dos Reinos Distantes.</li>
+                <li>
+                    Constantemente fala-se sobre a cidade de Carcosa:
+                    <ul>
+                        <li>Carcosa é a cidade onde há o lago Hali.</li>
+                        <li>Carcosa é a cidade onde existem os sóis gêmeos.</li>
+                    </ul>
+                </li>
+                <li>Acredita-se que trazer o Rei de Amarelo de volta é na verdade uma forma de levar as pessoas até Carcosa. Este é um suposto plano de Yelena, mas não sabemos se é exatamente assim, tampouco o motivo ainda.</li>
+            </ul>
+        </div>
+
+        <!-- Página 3: A Peça do Rei de Amarelo -->
+        <div class="content-card">
+            <h2 class="section-title">🔹A Peça do Rei de Amarelo</h2>
+            <p>Existem 6 (seis) pilares fundamentais para a peça. Esses pilares são eventos, ações, ideias, acontecimentos que se manifestam no mundo, mas são repesentados simbolicamente por algo, que Thalmus chamou de “Semente de memória”:</p>
+            
+            <ul class="custom-list">
+                <li>
+                    <strong>O enredo:</strong> A articulação dos fatos e ações. Como as coisas aconteceram e irão acontecer. Mozyg nos explicou o que Yelena está tramando, como o rei precisa ser lembrado. A draconesa é uma das maiores coletoras e contadoras de história de Aerdy do Norte, ela detinha o enredo em mãos, a primeira semente de memória.
+                    <ul>
+                        <li>Mozyg nos forneceu o artefato. Mas não vimos ainda. Seria Mozyg a própria representação do Enredo, ou é algo de fato naquela caixa?</li>
+                    </ul>
+                </li>
+                <li><strong>O personagem:</strong> ???</li>
+                <li><strong>O pensamento:</strong> ???</li>
+                <li><strong>A palavra:</strong> ???</li>
+                <li><strong>A melodia:</strong> ???</li>
+                <li><strong>O espectáculo:</strong> ???</li>
+            </ul>
+
+            <h3 class="subsection-title">O que isso significa?</h3>
+            <ul class="custom-list">
+                <li>Yelena está usando dos poderes para montar a peça e usando o mundo, a vida e alma das pessoas como fonte e seu palco.</li>
+                <li>O Enredo é o mais importante, já aprendemos sobre ele e entramos na história da peça. Contudo, Yelena é quem detém o enredo final. Temos a chave para acabar com isso, mas precisamos passar pelos outros 5 para alcançar ela.</li>
+                <li>Precisamos entender quem ou o que representa os outros 5 elementos para enfraquecer Yelena o suficiente e chegar até ela.</li>
+            </ul>
+        </div>
+
+        <!-- Bloco de Seções Expansíveis -->
+        <div class="content-card">
+
+            <!-- Expansível: Facções, Famílias e Organizações -->
+            <details class="expandable-section">
+                <summary class="expandable-header">
+                    <span>Facções, Famílias e Organizações</span>
+                </summary>
+                <div class="expandable-content">
+                    
+                    <h3 class="subsection-title">Conclave dos Ventos</h3>
+                    <ul class="custom-list">
+                        <li>Anciã ordem druídica fundada por Thalmus, Barba de sapo e seus aliados.</li>
+                        <li>Atua em todo Flanaess, mas majoritariamente em Aerdy.</li>
+                        <li>Detém a metodologia de contar histórias e passar informações através dos ventos.</li>
+                        <li>Misteriosos, discretos e, apesar de não diretamente envolvidos, se opõem ao culto do Rei de Amarelo.</li>
+                    </ul>
+
+                    <h3 class="subsection-title">A cidade de Atirr</h3>
+                    <ul class="custom-list">
+                        <li>Politicamente neutra em relação ao culto, parece pouco se importar.</li>
+                        <li>Há evidências de Nobres envolvidos com o culto do Rei de Amarelo.</li>
+                        <li>Kalista, capitã da guarda da cidade e da força de elite (Os carapaças e Alta Maré, respectivamente) está mais envolvida e se opõe diretamente ao culto, mas possui impedimentos burocráticos.</li>
+                        <li>A cidade foi afetada pelos poderes do símbolo de amarelo, mas o grupo salvou ao impedir que o conjurador verminoso executasse seu plano.</li>
+                    </ul>
+
+                    <h3 class="subsection-title">Ordem exotérica dracônica</h3>
+                    <ul class="custom-list">
+                        <li>Ouvimos apenas boato desta ordem. Aparentemente eram aventureiros que se uniram sob a benção de Drulkadiandeliath anos atrás.</li>
+                        <li>Naesala e Thalmus fazem parte dela, mas parece extinta.</li>
+                    </ul>
+
+                    <h3 class="subsection-title">Família Sylesse</h3>
+                    <ul class="custom-list">
+                        <li>Originários de Bellport, mas refugiados em Atirr, após um escândalo não comprendido que rolou em Bellport.</li>
+                        <li>Conhecidos por serem ricos comerciantes e contrabandistas de materiais, peles, iten mágicos, coisas “exóticas” e escravizados.</li>
+                        <li>Responsáveis pela comercialização de Eldrin quando criança. O quão longe eles estão envolvidos?</li>
+                        <li>Eram os “donos” de Cruzada.</li>
+                        <li>Camila Sylesse, a amada de Cruzada, é a filha mais jovem desta família.</li>
+                        <li>Francizka Sylesse, a mãe de Camila, fugiu de Bellport junto da filha e está em Atirr.</li>
+                    </ul>
+
+                    <h3 class="subsection-title">Família Pashia</h3>
+                    <ul class="custom-list">
+                        <li>Família do Lord Mag’hal de Bellport.</li>
+                        <li>Aliados do Patriarca Haldrem (Líder político e religioso de Bellport).</li>
+                        <li>Um dos filhos de Mag’hal, Kanaan Pashia, iria se casar com Camila Sylesse.</li>
+                        <li>Estão tentando buscar prestígio em Atirr para fazer a mesma movimentação que os Sylesse.</li>
+                    </ul>
+
+                </div>
+            </details>
+
+            <!-- Expansível: Como os Personagens se ligam nisso? -->
+            <details class="expandable-section">
+                <summary class="expandable-header">
+                    <span>E como os Personagens se ligam nisso?</span>
+                </summary>
+                <div class="expandable-content">
+                    
+                    <h3 class="subsection-title">Ar’Survio</h3>
+                    <ul class="custom-list">
+                        <li>Criado por Harvine Forestshard, supostamente com poderes do Símbolo de Amarelo. Seu objetivo era espionar e coletar informações sobre isso em Atirr.</li>
+                    </ul>
+
+                    <h3 class="subsection-title">Cruzada</h3>
+                    <ul class="custom-list">
+                        <li>Camila Sylesse, sua amada, está afetada pelo símbolo de amarelo e há a suspeita de que ela usou desse poder para reviver Cruzada.</li>
+                    </ul>
+
+                    <h3 class="subsection-title">Eldrin</h3>
+                    <ul class="custom-list">
+                        <li>O seu sangue e sua origem remetem ao dragão que já afastou esse culto no passado, além de ser rival de um dos principais “atores” em potencial do Rei de Amarelo, Eschhzaedras.</li>
+                        <li>A família Sylesse já foi sua captora e hoje Camila está envolvida com o culto.</li>
+                    </ul>
+
+                    <h3 class="subsection-title">Geum</h3>
+                    <ul class="custom-list">
+                        <li>Sua irmã foi afetada por uma licantropia mais poderosa que o natural. Acredita-se que a influência do símbolo de amarelo é a culpada.</li>
+                        <li>Lord Mag’hal, que diz cuidar dela, está possivelmente envolvido com o culto e/ou com famílias envolvidas.</li>
+                    </ul>
+
+                    <h3 class="subsection-title">Koa</h3>
+                    <ul class="custom-list">
+                        <li>Ao dispertar algo proibido na sua ilha, na verdade atraiu a atenção de Aboleths, seres de memória histórica, que nada esquece. Esses foram os primeiros a serem dispertos, quando os efeitos do símbolo começaram a atingir o mar antes de tudo. Suspeita-se que os sonhos de Eschazaedras despertaram os Aboleths e Koa os atraiu para sua ilha.</li>
+                    </ul>
+
+                </div>
+            </details>
+
+            <!-- Expansível: Outros Personagens -->
+            <details class="expandable-section">
+                <summary class="expandable-header">
+                    <span>Outros Personagens</span>
+                </summary>
+                <div class="expandable-content">
+                    
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/question.png');">Drulkadiandeliath</span></h3>
+                    <ul class="custom-list">
+                        <li>Lendário Greatwyrm Dourado que protege e agiu durante séculos em Aerdy do Norte. Acredita-se que está adormecido em algum lugar.</li>
+                        <li>Eldrin é supostamente ligado aos sonhos deste dragão.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/question.png');">Ezchazaedras</span></h3>
+                    <ul class="custom-list">
+                        <li>Lendário Dracolich que, dentre outras façanhas, é conhecido como um arauto do Rei de Amarelo e sabe o caminho para Carcosa. Adormecido em algum lugar no mar do Norte.</li>
+                        <li>Irmão e eterno rival de Drulkadiandeliath.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/mozyg.webp');">Mozyg</span></h3>
+                    <ul class="custom-list">
+                        <li>Draconesa anciã de cobre. Contadora de histórias e pregadora de peças.</li>
+                        <li>Sabe sobre o Enredo do Rei de Amarelo, forneceu itens mágicos e cobrou de nós uma promessa de nunca ler ou deixar ser lida a peça do Rei de Amarelo.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Thalmusbarbadesapo.jpg');">Thalmus, Barba de Sapo</span></h3>
+                    <ul class="custom-list">
+                        <li>Anão druída ancião que encontramos para ajudar Naesala. Um dos fundadores da Conclave dos Ventos.</li>
+                        <li>Nos mandou para Mozyg e nos teleportou via árvore. Ele foi ajudar Naesala.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/harvineforestshard.jpg');">Harvine Forestshard</span></h3>
+                    <ul class="custom-list">
+                        <li>Necromante Vampira e devota a Wee Jas que conhecemos em Bilebrine. Ela tenta entender e combater as forças de Yelena.</li>
+                        <li>Criadora de Ar’Survio e algumas magias necróticas.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/eliselavergne.jpg');">Élise La’Vergne</span></h3>
+                    <ul class="custom-list">
+                        <li>Sacerdotisa de Pelor que conhecemos em Bilebrine. Tem poderes especiais e é amiga de Harvine.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/question.png');">Lord Mag’Hal</span></h3>
+                    <ul class="custom-list">
+                        <li>Lorde Diretor de algumas minas de Electrum perto de Bellport, contratante de Geum e responsável pela irmã do Goliath.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/capitaakallista.webp');">Capitã Kallista</span></h3>
+                    <ul class="custom-list">
+                        <li>Capitão da guarda de Atirr, tanto dos Carapaças (guarda mundana) quanto da força de elite chamada Alta Maré.</li>
+                        <li>Teve desavenças com o grupo e depois entendimentos. Está positivamente neutra e buscando ser ouvida pelo seu superior, o mago da corte, Ryshern.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/kroc.png');">Professor Kroc</span></h3>
+                    <ul class="custom-list">
+                        <li>Encontramos com ele no esgoto. É um homem-jacaré miúdo pesquisador de Teriantropia e outras transformações.</li>
+                        <li>Conhecia pouco sobre o Rei de Amarelo e era amigo do Verminoso, antes dele se transformar pelo símbolo.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Lord_Rovard_Cintrallis.jpg');">Lord Rovard Cintrallis</span></h3>
+                    <ul class="custom-list">
+                        <li>Filho do Lord Cintrallis, que sumiu no caminho de Bilebrine até Atirr.</li>
+                        <li>Nos recebeu em sua casa, mas teve um comportamento muito suspeito e não parecia abalado coma a morte do Pai.</li>
+                        <li>Havia sinais do símbolo de amarelo em uma outra casa sua, além de evidências de atividades “outras”.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Naesala_Liasandorel_2.png');">Naesala Liasandoral</span></h3>
+                    <ul class="custom-list">
+                        <li>Elfa feiticeira dracônica que também tem o sangue de Drulkadiandeliath.</li>
+                        <li>Aliada e disposta a ajudar, teve sua estalagem (La Font) destruída por Mortalha, que roubou a orbe amarela que deixamos com ela.</li>
+                        <li>Ficou magicamente envenenada por algo nunca visto antes, deixamos aos cuidados de Padre Klaus e Kalista, enviamos Thalmus até ela.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Malena.webp');">Irmã Malena</span></h3>
+                    <ul class="custom-list">
+                        <li>Freira de Wee Jas que cuida da pequena capela dedicada a Deusa na cidade.</li>
+                        <li>Aliada e auxiliando na investigação sobre o Rei de Amarelo. Tem ensinado e cuidado de Cruzada.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Padre_Klaus.webp');">Padre Klaus</span></h3>
+                    <ul class="custom-list">
+                        <li>Padre de Pelor, responsável pelas missas e frente da igreja na cidade.</li>
+                        <li>Aliado e totalmente disposto a ajudar e “colocar a mão no fogo” por nós, para combater a expansão do símbolo de Amarelo.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/franciska.webp');">Lady Francizka Sylesse</span></h3>
+                    <ul class="custom-list">
+                        <li>Mãe de Camila Sylesse, está em Atirr e tem se dedicado a Fé de Pelor em busca de perdão e salvação.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Camilla Sylesse.jpg');">Lady Camila Sylesse</span></h3>
+                    <ul class="custom-list">
+                        <li>Suposta amada de Cruzada. Está afetada pelo símbolo.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/question.png');">Shuki, a Víbora</span></h3>
+                    <ul class="custom-list">
+                        <li>Ouvimos seu nome. Sabemos que ela já ofereceu moedas por Rykar e é responsável pela estalagem serpentina.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Ravuh.webp');">Ravu, o pastor de nuvens</span></h3>
+                    <ul class="custom-list">
+                        <li>Um curioso sapo antropomórfico que nos deu uma semente de nuvem após receber um poema de Cruzada. Ele estava procurando por seu amigo Thalmus. Também um membro da Conclave dos Ventos.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/question.png');">Lord Duskan</span></h3>
+                    <ul class="custom-list">
+                        <li>Apenas ouvimos seu nome. Comerciante de itens mágicos, rico. Vive na mansão da muralha exterior de Atirr.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Thalindra_Voldren.jpg');">Alta Sacerdotisa Thalindra Voldren</span></h3>
+                    <ul class="custom-list">
+                        <li>Maior entidade religiosa de Atirr. Responsável pelo grande templo de Procan.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Syerra.jpg');">Syerra</span></h3>
+                    <ul class="custom-list">
+                        <li>Taverneira e dona da taverna Pirata Fugaz.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/question.png');">Ryshern Stefanem</span></h3>
+                    <ul class="custom-list">
+                        <li>Mago da Corte de Atirr, braço direito do príncipe. Há quem diga que ele tem influência demais.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Zuvus_O_Peixe');">Zuvuz, o Peixe</span></h3>
+                    <ul class="custom-list">
+                        <li>Taverneiro do Pirata Fugaz, um famoso faz-tudo.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/lincelot.webp');">Lincelot</span></h3>
+                    <ul class="custom-list">
+                        <li>Recepcionista e gerente da Guilda dos Aventureiros. Ganhou 1500 moedas de ouro de alguns membros do grupo após apostas.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/Rykar_Allaram.jpg');">Rykar Al'Laram</span></h3>
+                    <ul class="custom-list">
+                        <li>Vítima de Yelena que estava na torre inicial junto de nós. Nos levou até Bilebrine pela entrada alternativa.</li>
+                        <li>É envolvido com o crime de Bilebrine e Atirr. É procurado.</li>
+                        <li>Roubamos um artefato que ele estava carregando de Bilebrine para Atirr.</li>
+                    </ul>
+
+                    <h3 class="subsection-title"><span class="npc-hover" style="--npc-img: url('imgs/npcs/O_executor.jpg');">O executor</span></h3>
+                    <ul class="custom-list">
+                        <li>O vimos ao fugir da ilha onde nos conhecemos. Já escutamos seu nome outras vezes de boca de servos de Yelena.</li>
+                    </ul>
+
+
+
+                </div>
+            </details>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
